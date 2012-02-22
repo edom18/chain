@@ -1,19 +1,28 @@
-/**
-* Chain callbacks.
-* @param {Array Function} call function objects as chain method.
-*/
-var chain = function () {
+(function (global, doc) {
 
-    var actors = Array.prototype.slice.call(arguments);
+    /**
+    * Chain callbacks.
+    * @param {Array Function} call function objects as chain method.
+    * @return undefined
+    */
+    function chain() {
 
-    function next() {
-    
-        var actor = actors.shift(),
-            arg = Array.prototype.slice.call(arguments);
+        var actors = Array.prototype.slice.call(arguments);
 
-        arg.push(next);
-        (Object.prototype.toString.call(actor) === '[object Function]') && actor.apply(actor, arg);
+        function next() {
+        
+            var actor = actors.shift(),
+                arg = Array.prototype.slice.call(arguments);
+
+            arg.push(next);
+            (Object.prototype.toString.call(actor) === '[object Function]') && actor.apply(actor, arg);
+        }
+
+        next();
     }
 
-    next();
-};
+    /* -----------------------------------------------
+       EXPORT
+    -------------------------------------------------- */
+    global.chain = chain;
+}(this, document));
