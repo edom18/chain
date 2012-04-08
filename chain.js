@@ -2,12 +2,11 @@
 
     /**
     * Chain callbacks.
-    * @param {Array Function} call function objects as chain method.
+    * @param {Function[]} [No arguments name] Call function objects as chain method.
     * @return undefined
     * @example
     *   chain(function (next) {... next(); }, function (next) {... next(); }, function (next) {... next(); }...);
-    *
-    *   next is callback.
+    *       -> next is callback.
     */
     function chain() {
 
@@ -21,7 +20,7 @@
             //push `next` method to argumetns to last.
             arg.push(next);
 
-            //when `actor` as function, call it.
+            //when `actor` is function, call it.
             (Object.prototype.toString.call(actor) === '[object Function]') && actor.apply(actor, arg);
         }
 
